@@ -1,6 +1,5 @@
 // src/components/layout/RootClientLayout.tsx
 "use client";
-import { useState, useEffect } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../../app/globals.css";
 
@@ -18,18 +17,6 @@ const geistMono = Geist_Mono({
 });
 
 export default function RootClientLayout({ children }: { children: React.ReactNode }) {
-  const [userType, setUserType] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Vérifier si l'URL contient un paramètre userType
-    const params = new URLSearchParams(window.location.search);
-    const typeParam = params.get("userType");
-
-    if (typeParam === "provider" || typeParam === "admin") {
-      setUserType(typeParam);
-    }
-  }, []); // Ajout du tableau de dépendances vide ici
-
   return (
     <html>
       <body
