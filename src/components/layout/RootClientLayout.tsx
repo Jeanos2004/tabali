@@ -1,12 +1,11 @@
-// src/components/layout/DashboardClientLayout.tsx
+// src/components/layout/RootClientLayout.tsx
 "use client";
-import type { Metadata } from "next";
+import { useState, useEffect } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../../app/globals.css";
 
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,32 +17,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Tabali - Connectez-vous avec des prestataires de services en Guinée",
-  description: "Tabali connecte particuliers et prestataires (ménage, plomberie, électricité, etc.) en Guinée pour tous vos besoins quotidiens.",
-};
+export default function RootClientLayout({ children }: { children: React.ReactNode }) {
+  const [userType, setUserType] = useState<string | null>(null);
 
+  useEffect(() => {
+    // Vérifier si l'URL contient un paramètre userType
+    const params = new URLSearchParams(window.location.search);
+    const typeParam = params.get("userType");
 
-
-// Supprimez cette importation si vous n'utilisez pas DashboardSidebar
-// import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
-
-export default function DashboardClientLayout({ children }: { children: React.ReactNode }) {
-  // Vous pouvez supprimer cet état si vous ne l'utilisez pas
-  // const [userType, setUserType] = useState<string | null>(null);
-
-  // Supprimez cet useEffect si vous n'en avez pas besoin
-  // useEffect(() => {
-  //   // Vérifier si l'URL contient un paramètre userType
-  //   if (typeof window !== "undefined") {
-  //     const params = new URLSearchParams(window.location.search);
-  //     const typeParam = params.get("userType");
-
-  //     if (typeParam === "provider" || typeParam === "admin") {
-  //       setUserType(typeParam);
-  //     }
-  //   }
-  // }, []) // Ajoutez un tableau de dépendances vide ici
+    if (typeParam === "provider" || typeParam === "admin") {
+      setUserType(typeParam);
+    }
+  }, []); // Ajout du tableau de dépendances vide ici
 
   return (
     <html>
