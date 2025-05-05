@@ -1,6 +1,6 @@
 // src/app/(routes)/dashboard/layout.tsx
-import DashboardClientLayout from "@/components/layout/DashboardClientLayout";
+import RootClientLayout from "@/components/layout/RootClientLayout";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <DashboardClientLayout>{children}</DashboardClientLayout>;
+  return <RootClientLayout>{children}</RootClientLayout>;
 }
