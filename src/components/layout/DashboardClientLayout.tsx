@@ -8,6 +8,7 @@ export default function DashboardClientLayout({ children }: { children: React.Re
   const [userType, setUserType] = useState<"client" | "provider" | "admin">("client");
 
   useEffect(() => {
+    // S'exécute uniquement côté client
     const params = new URLSearchParams(window.location.search);
     const typeParam = params.get("userType");
     if (typeParam === "provider" || typeParam === "admin") {

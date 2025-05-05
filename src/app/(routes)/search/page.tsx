@@ -11,7 +11,6 @@ import { motion } from "framer-motion";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [providers, setProviders] = useState<Provider[]>(MOCK_PROVIDERS);
   const [filteredProviders, setFilteredProviders] = useState<Provider[]>(MOCK_PROVIDERS);
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
@@ -19,13 +18,14 @@ export default function SearchPage() {
 
   // Récupérer les filtres initiaux depuis l'URL
   const initialFilters = {
-    service: searchParams.get("service") || "",
-    location: searchParams.get("location") || "",
-    minRating: parseFloat(searchParams.get("minRating") || "0"),
-    maxPrice: parseInt(searchParams.get("maxPrice") || "100000"),
+    service: searchParams?.get("service") || "",
+    location: searchParams?.get("location") || "",
+    minRating: parseFloat(searchParams?.get("minRating") || "0"),
+    maxPrice: parseInt(searchParams?.get("maxPrice") || "100000"),
   };
 
   useEffect(() => {
+    // Tout code utilisant window doit être placé ici
     // Simuler un chargement de données
     const timer = setTimeout(() => {
       setIsLoading(false);

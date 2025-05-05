@@ -20,24 +20,22 @@ const geistMono = Geist_Mono({
 export default function RootClientLayout({ children }: { children: React.ReactNode }) {
   const [userType, setUserType] = useState<string | null>(null);
 
+  // Utilisation de useEffect pour s'assurer que ce code s'exécute uniquement côté client
   useEffect(() => {
-    // Vérifier si window est défini (côté client uniquement)
-    if (typeof window !== "undefined") {
-      // Vérifier si l'URL contient un paramètre userType
-      const params = new URLSearchParams(window.location.search);
-      const typeParam = params.get("userType");
+    // Le code à l'intérieur de useEffect s'exécute uniquement côté client
+    const params = new URLSearchParams(window.location.search);
+    const typeParam = params.get("userType");
 
-      if (typeParam === "provider" || typeParam === "admin") {
-        setUserType(typeParam);
-      }
+    if (typeParam === "provider" || typeParam === "admin") {
+      setUserType(typeParam);
     }
   }, []);
 
   return (
-    <html>
+    <html lang="fr">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
-        data-user-type={userType} // Utiliser userType pour éviter l'erreur "variable définie mais jamais utilisée"
+        data-user-type={userType}
       >
         <Navbar />
         <main className="flex-1">{children}</main>
