@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tabali - Inscrivez-vous et trouvez des prestataires de services en Guinée",
+  title: "Tabali - Inscrivez-vous ou Connectez-vous et trouvez des prestataires de services en Guinée",
   description: "Tabali connecte particuliers et prestataires (ménage, plomberie, électricité, etc.) en Guinée pour tous vos besoins quotidiens.",
 };
 
