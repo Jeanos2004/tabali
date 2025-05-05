@@ -1,12 +1,8 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { DateTimePicker } from "@/components/ui/date-time-picker";
-import { BookingForm } from "@/components/ui/booking-form";
 
 // Composant client séparé qui utilise useSearchParams
 function BookingContent() {
@@ -42,7 +38,9 @@ function BookingContent() {
     return () => clearTimeout(timer);
   }, [providerId]);
 
-  const handleFormChange = (formData: {
+  // Définir les fonctions mais les marquer comme non utilisées avec un préfixe _
+  // ou les supprimer si elles ne sont pas nécessaires dans cette version du composant
+  const _handleFormChange = (formData: {
     service: string;
     address: string;
     description: string;
@@ -57,7 +55,7 @@ function BookingContent() {
     });
   };
 
-  const handleDateTimeChange = (date: string, timeSlot: { start: string; end: string }) => {
+  const _handleDateTimeChange = (date: string, timeSlot: { start: string; end: string }) => {
     setBookingData({
       ...bookingData,
       date,
@@ -66,21 +64,19 @@ function BookingContent() {
     });
   };
 
-  const handleNextStep = () => {
+  const _handleNextStep = () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
     }
   };
 
-  const handlePreviousStep = () => {
+  const _handlePreviousStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
     }
   };
 
-  const handleSubmit = () => {
-    // Ici, nous simulons simplement une réservation réussie
-    // Dans une application réelle, nous enverrions ces données à une API
+  const _handleSubmit = () => {
     console.log("Réservation soumise:", {
       providerId,
       ...bookingData,

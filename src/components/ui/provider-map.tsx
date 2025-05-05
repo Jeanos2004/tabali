@@ -1,10 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Provider } from "@/types";
 import { MOCK_PROVIDERS } from "@/lib/constants";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
 
 // Importation dynamique de la carte avec désactivation du SSR
