@@ -1,26 +1,93 @@
-@import "tailwindcss";
+@import '../styles/tabali-theme.css';
+/* Tailwind directives */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Import du thème Tabali */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Styles spécifiques à l'application */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--tabali-font-sans);
+  color: var(--tabali-foreground);
+  background-color: var(--tabali-background);
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+
+/* Amélioration des transitions */
+a, button, input, select, textarea {
+  transition: all 0.2s ease;
+}
+
+/* Effet de glassmorphisme */
+.tabali-glass {
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tabali-glass-dark {
+  backdrop-filter: blur(12px);
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Animations */
+.tabali-animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Styles de texte */
+.tabali-gradient-text {
+  color: transparent;
+  background-clip: text;
+  background-image: linear-gradient(to right, var(--tabali-primary), var(--tabali-secondary), var(--tabali-accent));
+}
+
+/* Conteneur avec largeur maximale */
+.tabali-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1280px;
+}
+
+/* Grille responsive */
+.tabali-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--tabali-muted);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 135, 81, 0.5); /* --tabali-primary avec 50% d'opacité */
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 135, 81, 0.7); /* --tabali-primary avec 70% d'opacité */
 }
