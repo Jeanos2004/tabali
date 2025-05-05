@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "Tabali connecte particuliers et prestataires (ménage, plomberie, électricité, etc.) en Guinée pour tous vos besoins quotidiens.",
 };
 
-export default function RegisterLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
