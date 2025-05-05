@@ -217,14 +217,6 @@ Sous-tâches:
 - [ ] Développer les thèmes personnalisés
 - [ ] Assurer l'accessibilité pour tous les thèmes
 
-#### Version mobile native (React Native)
-Sous-tâches:
-- [ ] Configurer l'environnement React Native
-- [ ] Adapter les composants UI pour mobile
-- [ ] Implémenter les fonctionnalités natives
-- [ ] Développer les notifications push natives
-- [ ] Optimiser les performances sur mobile
-- [ ] Préparer le déploiement sur les stores
 
 #### Intégration avec des services tiers
 Sous-tâches:
