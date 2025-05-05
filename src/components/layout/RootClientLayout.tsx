@@ -40,9 +40,9 @@ function RootClientLayoutContent({ children }: { children: React.ReactNode }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
         data-user-type={userType}
       >
-        {!isAuthPage && <Navbar />}
+        {isAuthPage && <Navbar />}
         <main className="flex-1">{children}</main>
-        {!isAuthPage && <Footer />}
+        {isAuthPage && <Footer />}
       </body>
     </html>
   );
