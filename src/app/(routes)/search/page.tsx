@@ -11,13 +11,11 @@ import { motion } from "framer-motion";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
-  // Suppression de la ligne suivante qui cause l'erreur
-  // const [providers, setProviders] = useState<Provider[]>(MOCK_PROVIDERS);
   const [filteredProviders, setFilteredProviders] = useState<Provider[]>(MOCK_PROVIDERS);
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
   const [isLoading, setIsLoading] = useState(true);
 
-  // Récupérer les filtres initiaux depuis l'URL
+  // Récupérer les filtres initiaux depuis l'URL en utilisant useSearchParams
   const initialFilters = {
     service: searchParams?.get("service") || "",
     location: searchParams?.get("location") || "",
@@ -26,7 +24,6 @@ export default function SearchPage() {
   };
 
   useEffect(() => {
-    // Tout code utilisant window doit être placé ici
     // Simuler un chargement de données
     const timer = setTimeout(() => {
       setIsLoading(false);

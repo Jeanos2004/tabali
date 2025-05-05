@@ -2,19 +2,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 
 export default function DashboardClientLayout({ children }: { children: React.ReactNode }) {
+  const searchParams = useSearchParams();
   const [userType, setUserType] = useState<"client" | "provider" | "admin">("client");
 
   useEffect(() => {
-    // S'exécute uniquement côté client
-    const params = new URLSearchParams(window.location.search);
-    const typeParam = params.get("userType");
+    // Utiliser useSearchParams au lieu de window.location.search
+    const typeParam = searchParams?.get("userType");
     if (typeParam === "provider" || typeParam === "admin") {
-      setUserType(typeParam);
+      setUserType(typeParam as "provider" | "admin");
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
