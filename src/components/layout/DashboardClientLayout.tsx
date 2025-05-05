@@ -28,26 +28,30 @@ import { useState, useEffect } from "react";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 
 export default function DashboardClientLayout({ children }: { children: React.ReactNode }) {
-  const [userType, setUserType] = useState<"client" | "provider" | "admin">("client");
+  const [userType, setUserType] = useState<string | null>(null);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const typeParam = params.get("userType");
-    if (typeParam === "provider" || typeParam === "admin") {
-      setUserType(typeParam);
+    // Vérifier si l'URL contient un paramètre userType
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const typeParam = params.get("userType");
+
+      if (typeParam === "provider" || typeParam === "admin") {
+        setUserType(typeParam);
+      }
     }
-  }, []);
+  })
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
-      <DashboardSidebar userType={userType} />
-      <div
+    <html>
+      <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
+
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
-      </div>
-    </div>
+      </body>
+    </html>
   );
 }
