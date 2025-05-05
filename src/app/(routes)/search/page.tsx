@@ -11,7 +11,8 @@ import { motion } from "framer-motion";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
-  const [providers, setProviders] = useState<Provider[]>(MOCK_PROVIDERS);
+  // Suppression de la ligne suivante qui cause l'erreur
+  // const [providers, setProviders] = useState<Provider[]>(MOCK_PROVIDERS);
   const [filteredProviders, setFilteredProviders] = useState<Provider[]>(MOCK_PROVIDERS);
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
   const [isLoading, setIsLoading] = useState(true);
@@ -41,7 +42,7 @@ export default function SearchPage() {
     maxPrice: number;
   }) => {
     // Filtrer les prestataires en fonction des critères
-    const filtered = providers.filter((provider) => {
+    const filtered = MOCK_PROVIDERS.filter((provider) => {
       const serviceMatch = !filters.service || provider.services.includes(filters.service);
       const locationMatch = !filters.location || provider.location.address.includes(filters.location);
       const ratingMatch = provider.rating >= filters.minRating;
