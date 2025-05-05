@@ -1,8 +1,7 @@
 // src/components/layout/RootClientLayout.tsx
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../../app/globals.css";
 
@@ -19,7 +18,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function RootClientLayout({ children }: { children: React.ReactNode }) {
+// Composant client séparé qui utilise useSearchParams
+function RootClientLayoutContent({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
   const [userType, setUserType] = useState<string | null>(null);
 
@@ -42,5 +42,29 @@ export default function RootClientLayout({ children }: { children: React.ReactNo
         <Footer />
       </body>
     </html>
+  );
+}
+
+// Ajout des imports manquants
+import { useSearchParams } from "next/navigation";
+
+// Layout principal avec Suspense
+export default function RootClientLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={
+      <html>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
+          <Navbar />
+          <main className="flex-1">
+            <div className="container py-8 flex justify-center">
+              <div className="w-12 h-12 border-t-2 border-b-2 border-[#008751] rounded-full animate-spin"></div>
+            </div>
+          </main>
+          <Footer />
+        </body>
+      </html>
+    }>
+      <RootClientLayoutContent>{children}</RootClientLayoutContent>
+    </Suspense>
   );
 }

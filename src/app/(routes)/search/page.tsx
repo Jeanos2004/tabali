@@ -1,15 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { ProviderMap } from "@/components/ui/provider-map";
-import { SearchFilters } from "@/components/ui/search-filters";
-import { ProviderCard } from "@/components/ui/provider-card";
-import { MOCK_PROVIDERS } from "@/lib/constants";
-import { Provider } from "@/types";
+import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 
-export default function SearchPage() {
+// Composant client séparé qui utilise useSearchParams
+function SearchContent() {
   const searchParams = useSearchParams();
   const [filteredProviders, setFilteredProviders] = useState<Provider[]>(MOCK_PROVIDERS);
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
@@ -151,5 +146,22 @@ export default function SearchPage() {
         </motion.div>
       )}
     </div>
+  );
+}
+
+// Ajout des imports manquants
+import { useSearchParams } from "next/navigation";
+import { ProviderMap } from "@/components/ui/provider-map";
+import { SearchFilters } from "@/components/ui/search-filters";
+import { ProviderCard } from "@/components/ui/provider-card";
+import { MOCK_PROVIDERS } from "@/lib/constants";
+import { Provider } from "@/types";
+
+// Page principale avec Suspense
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div className="container py-8 md:py-12"><div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">{[...Array(3)].map((_, index) => (<div key={index} className="h-[300px] bg-slate-100 animate-pulse rounded-lg"></div>))}</div></div>}>
+      <SearchContent />
+    </Suspense>
   );
 }
