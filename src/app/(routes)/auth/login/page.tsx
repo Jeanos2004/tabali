@@ -4,8 +4,10 @@ import { useState } from "react";
 import { AuthForm } from "@/components/ui/auth-form";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { Suspense } from "react";
 
-export default function LoginPage() {
+// Composant client séparé qui utilise useSearchParams
+function LoginContent() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -51,5 +53,14 @@ export default function LoginPage() {
         )}
       </motion.div>
     </div>
+  );
+}
+
+// Page principale avec Suspense
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="container py-12 md:py-16"><div className="max-w-md mx-auto p-8 flex justify-center"><div className="w-12 h-12 border-t-2 border-b-2 border-[#008751] rounded-full animate-spin"></div></div></div>}>
+      <LoginContent />
+    </Suspense>
   );
 }
