@@ -25,29 +25,31 @@ export const metadata: Metadata = {
 
 
 import { useState, useEffect } from "react";
-import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
+// Supprimez cette importation si vous n'utilisez pas DashboardSidebar
+// import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 
 export default function DashboardClientLayout({ children }: { children: React.ReactNode }) {
-  const [userType, setUserType] = useState<string | null>(null);
+  // Vous pouvez supprimer cet état si vous ne l'utilisez pas
+  // const [userType, setUserType] = useState<string | null>(null);
 
-  useEffect(() => {
-    // Vérifier si l'URL contient un paramètre userType
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      const typeParam = params.get("userType");
+  // Supprimez cet useEffect si vous n'en avez pas besoin
+  // useEffect(() => {
+  //   // Vérifier si l'URL contient un paramètre userType
+  //   if (typeof window !== "undefined") {
+  //     const params = new URLSearchParams(window.location.search);
+  //     const typeParam = params.get("userType");
 
-      if (typeParam === "provider" || typeParam === "admin") {
-        setUserType(typeParam);
-      }
-    }
-  })
+  //     if (typeParam === "provider" || typeParam === "admin") {
+  //       setUserType(typeParam);
+  //     }
+  //   }
+  // }, []) // Ajoutez un tableau de dépendances vide ici
 
   return (
     <html>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
