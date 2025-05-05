@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+
+
 
 import { Suspense } from "react";
 
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "Tabali - Inscrivez-vous et trouver des prestataires de services en Guinée",
+  title: "Tabali - Inscrivez-vous et trouvez des prestataires de services en Guinée",
   description: "Tabali connecte particuliers et prestataires (ménage, plomberie, électricité, etc.) en Guinée pour tous vos besoins quotidiens.",
 };
 
@@ -13,8 +26,13 @@ export default function RegisterLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <>
-        <main className="flex-1"><Suspense>{children}</Suspense></main>
-      </>
+    <html lang="fr">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+      >
+        <main className="flex-1"><Suspense >{children}</Suspense></main>
+
+      </body>
+    </html>
   );
 }
