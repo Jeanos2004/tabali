@@ -15,11 +15,13 @@ export default function DashboardLayout({
   // Simuler un changement de type d'utilisateur pour la démo
   useEffect(() => {
     // Vérifier si l'URL contient un paramètre userType
-    const params = new URLSearchParams(window.location.search);
-    const typeParam = params.get("userType");
-    
-    if (typeParam === "provider" || typeParam === "admin") {
-      setUserType(typeParam);
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const typeParam = params.get("userType");
+      
+      if (typeParam === "provider" || typeParam === "admin") {
+        setUserType(typeParam);
+      }
     }
   }, []);
 
