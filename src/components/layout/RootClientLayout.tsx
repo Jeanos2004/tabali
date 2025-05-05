@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 
-import { useState, useEffect } from "react";
+
 // Supprimez cette importation si vous n'utilisez pas DashboardSidebar
 // import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 
