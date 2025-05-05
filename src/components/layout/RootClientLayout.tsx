@@ -4,6 +4,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../../app/globals.css";
+import { usePathname } from "next/navigation";
 
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -22,6 +23,8 @@ const geistMono = Geist_Mono({
 function RootClientLayoutContent({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
   const [userType, setUserType] = useState<string | null>(null);
+  const pathname = usePathname();
+  const isAuthPage = pathname?.includes("/auth/");
 
   useEffect(() => {
     // Utiliser useSearchParams au lieu de window.location.search
@@ -37,9 +40,9 @@ function RootClientLayoutContent({ children }: { children: React.ReactNode }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
         data-user-type={userType}
       >
-        <Navbar />
+        {!isAuthPage && <Navbar />}
         <main className="flex-1">{children}</main>
-        <Footer />
+        {!isAuthPage && <Footer />}
       </body>
     </html>
   );
