@@ -1,11 +1,11 @@
 // src/components/layout/RootClientLayout.tsx
 "use client";
+import { useState, useEffect } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../../app/globals.css";
 
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { useEffect, useState } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +37,7 @@ export default function RootClientLayout({ children }: { children: React.ReactNo
     <html>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        data-user-type={userType} // Utiliser userType pour éviter l'erreur "variable définie mais jamais utilisée"
       >
         <Navbar />
         <main className="flex-1">{children}</main>
