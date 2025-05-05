@@ -398,7 +398,7 @@ export default function DashboardPage() {
             animate="show"
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {MOCK_PROVIDERS.map((provider, index) => (
+            {MOCK_PROVIDERS.map((provider) => (
               <motion.div key={provider.id} variants={item}>
                 <Card className="h-full">
                   <CardContent className="p-4">
