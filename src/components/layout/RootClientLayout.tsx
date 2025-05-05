@@ -5,6 +5,7 @@ import "../../app/globals.css";
 
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { useEffect, useState } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,6 +18,21 @@ const geistMono = Geist_Mono({
 });
 
 export default function RootClientLayout({ children }: { children: React.ReactNode }) {
+  const [userType, setUserType] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Vérifier si window est défini (côté client uniquement)
+    if (typeof window !== "undefined") {
+      // Vérifier si l'URL contient un paramètre userType
+      const params = new URLSearchParams(window.location.search);
+      const typeParam = params.get("userType");
+
+      if (typeParam === "provider" || typeParam === "admin") {
+        setUserType(typeParam);
+      }
+    }
+  }, []);
+
   return (
     <html>
       <body
