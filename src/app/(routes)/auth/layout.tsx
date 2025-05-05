@@ -1,3 +1,5 @@
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
@@ -25,9 +27,11 @@ export default function AuthLayout({
   return (
     <html lang="fr">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
+        <Navbar />
         <main className="flex-1">
           <Suspense>{children}</Suspense>
         </main>
+        <Footer />
       </body>
     </html>
   );
