@@ -1,5 +1,3 @@
-"use client";
-
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 import { useState, useEffect } from "react";
 
