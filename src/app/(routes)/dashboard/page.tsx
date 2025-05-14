@@ -3,9 +3,12 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { MOCK_PROVIDERS } from "@/lib/constants";
+import { Calendar, Clock, Star, Heart, CheckCircle, User, Settings, Search } from "lucide-react";
 
 export default function DashboardPage() {
   const [userType, setUserType] = useState<"client" | "provider" | "admin">("client");
@@ -96,22 +99,46 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">
+      <motion.div 
+        className="mb-8"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-2">
+          <div>
+            <Badge className="tabali-badge tabali-badge-secondary mb-2">
+              {userType === "client" ? "Espace Client" : userType === "provider" ? "Espace Prestataire" : "Administration"}
+            </Badge>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight font-tabali-serif text-tabali-foreground">
+              {userType === "client"
+                ? "Bienvenue sur votre espace"
+                : userType === "provider"
+                ? "Tableau de bord prestataire"
+                : "Tableau de bord administrateur"}
+            </h1>
+          </div>
+          
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="flex items-center gap-2">
+              <User size={14} />
+              <span>Profil</span>
+            </Button>
+            <Button variant="outline" size="sm" className="flex items-center gap-2">
+              <Settings size={14} />
+              <span>Paramètres</span>
+            </Button>
+          </div>
+        </div>
+        
+        <p className="text-tabali-muted-foreground text-lg mb-6">
           {userType === "client"
-            ? "Tableau de bord client"
+            ? "Gérez vos réservations et découvrez des prestataires de qualité"
             : userType === "provider"
-            ? "Tableau de bord prestataire"
-            : "Tableau de bord administrateur"}
-        </h1>
-        <p className="text-slate-500">
-          {userType === "client"
-            ? "Gérez vos réservations et vos prestataires favoris"
-            : userType === "provider"
-            ? "Gérez vos services et vos réservations"
-            : "Supervisez l'activité de la plateforme"}
+            ? "Gérez vos services et suivez vos réservations"
+            : "Supervisez l'activité de la plateforme et gérez les utilisateurs"}
         </p>
-      </div>
+      </motion.div>
 
       <motion.div
         variants={container}
@@ -120,31 +147,15 @@ export default function DashboardPage() {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
       >
         <motion.div variants={item}>
-          <Card>
+          <Card className="border-tabali-border hover:shadow-md transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-500 mb-1">Réservations totales</p>
-                  <h3 className="text-2xl font-bold">{stats.bookings}</h3>
+                  <p className="text-sm text-tabali-muted-foreground mb-1">Réservations totales</p>
+                  <h3 className="text-2xl font-bold font-tabali-serif text-tabali-foreground">{stats.bookings}</h3>
                 </div>
-                <div className="rounded-full bg-[#008751]/10 p-3 text-[#008751]">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-6 w-6"
-                  >
-                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                    <line x1="16" x2="16" y1="2" y2="6"></line>
-                    <line x1="8" x2="8" y1="2" y2="6"></line>
-                    <line x1="3" x2="21" y1="10" y2="10"></line>
-                  </svg>
+                <div className="rounded-full bg-tabali-primary/10 p-3 text-tabali-primary">
+                  <Calendar className="h-6 w-6" />
                 </div>
               </div>
             </CardContent>
@@ -152,29 +163,15 @@ export default function DashboardPage() {
         </motion.div>
 
         <motion.div variants={item}>
-          <Card>
+          <Card className="border-tabali-border hover:shadow-md transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-500 mb-1">Réservations à venir</p>
-                  <h3 className="text-2xl font-bold">{stats.upcoming}</h3>
+                  <p className="text-sm text-tabali-muted-foreground mb-1">Réservations à venir</p>
+                  <h3 className="text-2xl font-bold font-tabali-serif text-tabali-foreground">{stats.upcoming}</h3>
                 </div>
-                <div className="rounded-full bg-[#FCD116]/10 p-3 text-[#FCD116]">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-6 w-6"
-                  >
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
+                <div className="rounded-full bg-tabali-secondary/10 p-3 text-tabali-secondary">
+                  <Clock className="h-6 w-6" />
                 </div>
               </div>
             </CardContent>
@@ -182,29 +179,15 @@ export default function DashboardPage() {
         </motion.div>
 
         <motion.div variants={item}>
-          <Card>
+          <Card className="border-tabali-border hover:shadow-md transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-500 mb-1">Réservations terminées</p>
-                  <h3 className="text-2xl font-bold">{stats.completed}</h3>
+                  <p className="text-sm text-tabali-muted-foreground mb-1">Réservations terminées</p>
+                  <h3 className="text-2xl font-bold font-tabali-serif text-tabali-foreground">{stats.completed}</h3>
                 </div>
                 <div className="rounded-full bg-green-100 p-3 text-green-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-6 w-6"
-                  >
-                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
-                    <path d="m9 12 2 2 4-4"></path>
-                  </svg>
+                  <CheckCircle className="h-6 w-6" />
                 </div>
               </div>
             </CardContent>
@@ -213,28 +196,15 @@ export default function DashboardPage() {
 
         {userType === "client" && (
           <motion.div variants={item}>
-            <Card>
+            <Card className="border-tabali-border hover:shadow-md transition-all duration-300">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-slate-500 mb-1">Prestataires favoris</p>
-                    <h3 className="text-2xl font-bold">{stats.favorites}</h3>
+                    <p className="text-sm text-tabali-muted-foreground mb-1">Prestataires favoris</p>
+                    <h3 className="text-2xl font-bold font-tabali-serif text-tabali-foreground">{stats.favorites}</h3>
                   </div>
-                  <div className="rounded-full bg-red-100 p-3 text-red-600">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="h-6 w-6"
-                    >
-                      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-                    </svg>
+                  <div className="rounded-full bg-pink-100 p-3 text-pink-600">
+                    <Heart className="h-6 w-6" />
                   </div>
                 </div>
               </CardContent>
@@ -275,28 +245,15 @@ export default function DashboardPage() {
         )}
 
         <motion.div variants={item}>
-          <Card>
+          <Card className="border-tabali-border hover:shadow-md transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-slate-500 mb-1">Avis en attente</p>
-                  <h3 className="text-2xl font-bold">{stats.pendingReviews}</h3>
+                  <p className="text-sm text-tabali-muted-foreground mb-1">Avis en attente</p>
+                  <h3 className="text-2xl font-bold font-tabali-serif text-tabali-foreground">{stats.pendingReviews}</h3>
                 </div>
-                <div className="rounded-full bg-purple-100 p-3 text-purple-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-6 w-6"
-                  >
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                  </svg>
+                <div className="rounded-full bg-amber-100 p-3 text-amber-600">
+                  <Star className="h-6 w-6" />
                 </div>
               </div>
             </CardContent>
@@ -306,7 +263,7 @@ export default function DashboardPage() {
 
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold">
+          <h2 className="text-2xl font-bold font-tabali-serif text-tabali-foreground">
             {userType === "client"
               ? "Réservations récentes"
               : userType === "provider"
@@ -314,8 +271,11 @@ export default function DashboardPage() {
               : "Dernières activités"}
           </h2>
           <Link href="/dashboard/bookings">
-            <Button variant="outline" size="sm">
-              Voir tout
+            <Button variant="outline" size="sm" className="flex items-center gap-2 hover:bg-tabali-primary/10">
+              <span>Voir tout</span>
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-4 w-4">
+                <path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
+              </svg>
             </Button>
           </Link>
         </div>
@@ -328,39 +288,62 @@ export default function DashboardPage() {
         >
           {[...Array(3)].map((_, index) => (
             <motion.div key={index} variants={item}>
-              <Card>
+              <Card className="border-tabali-border hover:shadow-md transition-all duration-300">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-200 flex-shrink-0">
-                      <div className="w-full h-full bg-gradient-to-br from-[#008751] to-[#FCD116] opacity-70"></div>
+                    <div className="w-12 h-12 rounded-full overflow-hidden bg-tabali-muted flex-shrink-0 border border-tabali-border">
+                      {index < MOCK_PROVIDERS.length && MOCK_PROVIDERS[index].profileImage ? (
+                        <div className="relative w-full h-full">
+                          <Image 
+                            src={MOCK_PROVIDERS[index].profileImage} 
+                            alt={MOCK_PROVIDERS[index].name} 
+                            fill
+                            sizes="48px"
+                            className="object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-tabali-primary to-tabali-secondary opacity-70 flex items-center justify-center text-white font-bold">
+                          {userType === "client" ? 
+                            MOCK_PROVIDERS[index]?.name?.charAt(0) || "P" : 
+                            `C${index + 1}`
+                          }
+                        </div>
+                      )}
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                         <div>
-                          <h3 className="font-medium">
+                          <h3 className="font-medium text-tabali-foreground">
                             {userType === "client"
                               ? `Réservation avec ${MOCK_PROVIDERS[index].name}`
                               : userType === "provider"
                               ? `Demande de Client ${index + 1}`
                               : `Réservation #${100 + index}`}
                           </h3>
-                          <p className="text-sm text-slate-500">
-                            {new Date(
-                              Date.now() - index * 24 * 60 * 60 * 1000
-                            ).toLocaleDateString("fr-FR", {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            })}
-                          </p>
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm text-tabali-muted-foreground">
+                              {new Date(
+                                Date.now() - index * 24 * 60 * 60 * 1000
+                              ).toLocaleDateString("fr-FR", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              })}
+                            </p>
+                            <span className="text-xs text-tabali-muted-foreground">•</span>
+                            <p className="text-sm text-tabali-muted-foreground">
+                              {index === 0 ? "Plomberie" : index === 1 ? "Électricité" : "Menuiserie"}
+                            </p>
+                          </div>
                         </div>
                         <div className="flex items-center">
                           <span
                             className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                               index === 0
-                                ? "bg-yellow-100 text-yellow-800"
+                                ? "bg-amber-100 text-amber-800"
                                 : index === 1
-                                ? "bg-green-100 text-green-800"
+                                ? "bg-tabali-primary/10 text-tabali-primary"
                                 : "bg-blue-100 text-blue-800"
                             }`}
                           >
@@ -384,10 +367,11 @@ export default function DashboardPage() {
       {userType === "client" && (
         <div>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Prestataires recommandés</h2>
+            <h2 className="text-2xl font-bold font-tabali-serif text-tabali-foreground">Prestataires recommandés</h2>
             <Link href="/search">
-              <Button variant="outline" size="sm">
-                Rechercher
+              <Button variant="outline" size="sm" className="flex items-center gap-2 hover:bg-tabali-primary/10">
+                <Search className="h-4 w-4" />
+                <span>Rechercher</span>
               </Button>
             </Link>
           </div>
@@ -400,29 +384,24 @@ export default function DashboardPage() {
           >
             {MOCK_PROVIDERS.map((provider) => (
               <motion.div key={provider.id} variants={item}>
-                <Card className="h-full">
+                <Card className="h-full border-tabali-border hover:shadow-md transition-all duration-300">
                   <CardContent className="p-4">
                     <div className="flex items-center gap-4 mb-3">
-                      <div className="w-12 h-12 rounded-full overflow-hidden bg-slate-200 flex-shrink-0">
-                        <div className="w-full h-full bg-gradient-to-br from-[#008751] to-[#FCD116] opacity-70"></div>
+                      <div className="w-12 h-12 rounded-full overflow-hidden bg-tabali-muted flex-shrink-0 border border-tabali-border">
+                        {provider.profileImage ? (
+                          <div className="w-full h-full bg-gradient-to-br from-tabali-primary to-tabali-secondary opacity-70 flex items-center justify-center text-white font-bold">
+                            {provider.name.charAt(0)}
+                          </div>
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-tabali-primary to-tabali-secondary opacity-70 flex items-center justify-center text-white font-bold">
+                            {provider.name.charAt(0)}
+                          </div>
+                        )}
                       </div>
                       <div>
-                        <h3 className="font-medium">{provider.name}</h3>
-                        <div className="flex items-center gap-1 text-sm text-slate-500">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="h-3 w-3 text-[#FCD116]"
-                          >
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                          </svg>
+                        <h3 className="font-medium font-tabali-serif text-tabali-foreground">{provider.name}</h3>
+                        <div className="flex items-center gap-1 text-sm text-tabali-muted-foreground">
+                          <Star className="h-3 w-3 text-tabali-secondary fill-tabali-secondary" />
                           <span>
                             {provider.rating} ({provider.reviewCount} avis)
                           </span>
@@ -433,20 +412,20 @@ export default function DashboardPage() {
                       {provider.services.slice(0, 2).map((service) => (
                         <span
                           key={service}
-                          className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-[#008751]/10 text-[#008751]"
+                          className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-tabali-primary/10 text-tabali-primary"
                         >
                           {service}
                         </span>
                       ))}
                       {provider.services.length > 2 && (
-                        <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-slate-100 text-slate-700">
+                        <span className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-tabali-muted text-tabali-muted-foreground">
                           +{provider.services.length - 2}
                         </span>
                       )}
                     </div>
                     <div className="flex justify-end">
                       <Link href={`/profile/${provider.id}`}>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" className="hover:bg-tabali-primary/10 hover:text-tabali-primary transition-colors">
                           Voir le profil
                         </Button>
                       </Link>
