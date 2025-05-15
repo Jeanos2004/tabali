@@ -1,18 +1,18 @@
 import Link from "next/link";
-import Image from "next/image";
+//import Image from "next/image";
 
 export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-white to-tabali-muted/20 px-4">
       <div className="max-w-md w-full text-center space-y-8">
-        <div className="relative w-32 h-32 mx-auto mb-4">
+        {/* <div className="relative w-32 h-32 mx-auto mb-4">
           <Image 
             src="/logo.png" 
             alt="Tabali Logo" 
             fill
             className="object-contain"
           />
-        </div>
+        </div> */}
         
         <h1 className="text-6xl font-serif font-bold text-tabali-text">404</h1>
         <h2 className="text-2xl font-medium text-tabali-text mt-2">Page non trouvée</h2>
