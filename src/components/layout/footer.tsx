@@ -142,12 +142,12 @@ export function Footer() {
                 <span>Conakry, Guinée</span>
               </li>
             </ul>
-            <div className="flex gap-4 pt-2">
-              <a href="#" className="text-slate-500 hover:text-[#008751]">
+            <div className="flex gap-4 pt-3">
+              <a href="#" className="text-slate-500 hover:text-tabali-primary transition-colors duration-200 bg-slate-100 hover:bg-slate-200 p-2 rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -159,11 +159,11 @@ export function Footer() {
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                 </svg>
               </a>
-              <a href="#" className="text-slate-500 hover:text-[#008751]">
+              <a href="#" className="text-slate-500 hover:text-tabali-primary transition-colors duration-200 bg-slate-100 hover:bg-slate-200 p-2 rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -177,11 +177,11 @@ export function Footer() {
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
               </a>
-              <a href="#" className="text-slate-500 hover:text-[#008751]">
+              <a href="#" className="text-slate-500 hover:text-tabali-primary transition-colors duration-200 bg-slate-100 hover:bg-slate-200 p-2 rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -196,10 +196,23 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-8 border-t border-slate-200 pt-8 text-center">
-          <p className="text-sm text-slate-500">
-            © {new Date().getFullYear()} Tabali. Tous droits réservés.
-          </p>
+        <div className="mt-8 border-t border-slate-200 pt-6 md:pt-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center">
+            <p className="text-sm text-slate-500 mb-4 sm:mb-0">
+              © {new Date().getFullYear()} Tabali. Tous droits réservés.
+            </p>
+            <div className="flex items-center space-x-4">
+              <Link href="/terms" className="text-xs text-slate-500 hover:text-tabali-primary transition-colors duration-200">
+                Conditions d&apos;utilisation
+              </Link>
+              <Link href="/privacy" className="text-xs text-slate-500 hover:text-tabali-primary transition-colors duration-200">
+                Confidentialité
+              </Link>
+              <Link href="/cookies" className="text-xs text-slate-500 hover:text-tabali-primary transition-colors duration-200">
+                Cookies
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
