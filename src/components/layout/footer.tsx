@@ -1,81 +1,93 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-white md:flex md:justify-center">
-      <div className="container py-12 md:py-16">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+    <footer className="border-t border-slate-200 bg-white flex justify-center">
+      <div className="container py-8 sm:py-10 md:py-16 px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-[#008751]">Tabali</span>
+              <span className="text-2xl font-bold text-tabali-primary">Tabali</span>
             </Link>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-500 max-w-xs">
               Tabali connecte particuliers et prestataires de services en Guinée pour tous vos besoins quotidiens.
             </p>
+            <div className="pt-2 hidden sm:block lg:hidden xl:block">
+              <p className="text-xs font-medium text-tabali-primary">Téléchargez notre application</p>
+              <div className="flex gap-3 mt-2">
+                <a href="#" className="block">
+                  <Image src="/app-store-badge.png" alt="App Store" width={120} height={40} className="h-8 w-auto" />
+                </a>
+                <a href="#" className="block">
+                  <Image src="/google-play-badge.png" alt="Google Play" width={135} height={40} className="h-8 w-auto" />
+                </a>
+              </div>
+            </div>
           </div>
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Services</h3>
-            <ul className="space-y-2">
+            <h3 className="text-lg font-semibold text-tabali-text">Services</h3>
+            <ul className="space-y-2 text-slate-500">
               <li>
-                <Link href="/search?service=Ménage" className="text-sm text-slate-500 hover:text-[#008751]">
+                <Link href="/search?service=Ménage" className="text-sm hover:text-tabali-primary transition-colors duration-200">
                   Ménage
                 </Link>
               </li>
               <li>
-                <Link href="/search?service=Plomberie" className="text-sm text-slate-500 hover:text-[#008751]">
+                <Link href="/search?service=Plomberie" className="text-sm hover:text-tabali-primary transition-colors duration-200">
                   Plomberie
                 </Link>
               </li>
               <li>
-                <Link href="/search?service=Électricité" className="text-sm text-slate-500 hover:text-[#008751]">
+                <Link href="/search?service=Électricité" className="text-sm hover:text-tabali-primary transition-colors duration-200">
                   Électricité
                 </Link>
               </li>
               <li>
-                <Link href="/search?service=Jardinage" className="text-sm text-slate-500 hover:text-[#008751]">
+                <Link href="/search?service=Jardinage" className="text-sm hover:text-tabali-primary transition-colors duration-200">
                   Jardinage
                 </Link>
               </li>
               <li>
-                <Link href="/search" className="text-sm text-slate-500 hover:text-[#008751]">
+                <Link href="/search" className="text-sm hover:text-tabali-primary transition-colors duration-200">
                   Voir tous les services
                 </Link>
               </li>
             </ul>
           </div>
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Informations</h3>
-            <ul className="space-y-2">
+            <h3 className="text-lg font-semibold text-tabali-text">Informations</h3>
+            <ul className="space-y-2 text-slate-500">
               <li>
-                <Link href="/about" className="text-sm text-slate-500 hover:text-[#008751]">
+                <Link href="/about" className="text-sm hover:text-tabali-primary transition-colors duration-200">
                   À propos
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-sm text-slate-500 hover:text-[#008751]">
+                <Link href="/contact" className="text-sm hover:text-tabali-primary transition-colors duration-200">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-sm text-slate-500 hover:text-[#008751]">
+                <Link href="/faq" className="text-sm hover:text-tabali-primary transition-colors duration-200">
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-sm text-slate-500 hover:text-[#008751]">
+                <Link href="/terms" className="text-sm hover:text-tabali-primary transition-colors duration-200">
                   Conditions d&apos;utilisation
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-sm text-slate-500 hover:text-[#008751]">
+                <Link href="/privacy" className="text-sm hover:text-tabali-primary transition-colors duration-200">
                   Politique de confidentialité
                 </Link>
               </li>
             </ul>
           </div>
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Nous contacter</h3>
-            <ul className="space-y-2">
+            <h3 className="text-lg font-semibold text-tabali-text">Nous contacter</h3>
+            <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-slate-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
