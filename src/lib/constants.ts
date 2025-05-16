@@ -108,7 +108,7 @@ export const MOCK_PROVIDERS = [
         end: '19:00',
       },
     },
-    gallery: ['/gallery/cleaning-1.jpg', '/gallery/childcare-1.jpg', '/gallery/cleaning-2.jpg'],
+    gallery: ['/gallery/cleanning-1.jpg', '/gallery/childcare-1.jpg', '/gallery/cleaning-2.jpg'],
   },
   {
     id: '3',

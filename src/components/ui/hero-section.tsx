@@ -108,7 +108,7 @@ export function HeroSection() {
             className="text-4xl md:text-6xl font-bold text-white leading-tight"
             variants={itemVariants}
           >
-            Trouvez des prestataires de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#48b47f] via-[#FCD116] to-[#f15973]">confiance</span> pour tous vos besoins
+            Trouvez des prestataires de <span className="text-transparent bg-clip-text bg-gradient-to-r  from-[#FCD116] to-[#48b47f] ">confiance</span> pour tous vos besoins
           </motion.h1>
           
           <motion.p 
