@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const steps = [
@@ -346,11 +347,11 @@ export function HowItWorks() {
           viewport={{ once: true }}
           transition={{ delay: 0.8, duration: 0.5 }}
         >
-          <a 
+          <Link
             href="#featured-providers"
-            className="tabali-btn tabali-btn-primary tabali-btn-large group relative overflow-hidden rounded-full inline-flex items-center tabali-hover-lift"
+            className="tabali-btn tabali-btn-primary tabali-btn-large group relative overflow-hidden rounded-full inline-flex items-center tabali-hover-lift hover:text-white"
           >
-            <span className="tabali-btn-content flex items-center">
+            <span className="tabali-btn-content flex items-center ">
               Découvrir nos prestataires
               <motion.svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -364,7 +365,7 @@ export function HowItWorks() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </motion.svg>
             </span>
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

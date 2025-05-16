@@ -183,7 +183,7 @@ export function ServicesGrid() {
       >
         <Link 
           href="/search"
-          className="tabali-btn tabali-btn-primary tabali-btn-large group relative overflow-hidden rounded-full inline-flex items-center"
+          className="tabali-btn tabali-btn-primary tabali-btn-large group relative overflow-hidden rounded-full inline-flex items-center hover:text-white"
         >
           <span className="tabali-btn-content flex items-center">
             Voir tous les services
