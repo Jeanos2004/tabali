@@ -2,10 +2,42 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
+  }, [isMenuOpen]);
+
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        menuRef.current &&
+        buttonRef.current &&
+        event.target instanceof Node &&
+        !menuRef.current.contains(event.target) &&
+        !buttonRef.current.contains(event.target)
+      ) {
+        setIsMenuOpen(false);
+      }
+    }
+    
+  
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+  
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+  
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur-sm flex justify-center">
@@ -51,9 +83,10 @@ export function Navbar() {
             </Link>
           </div>
           <button
-            className="flex items-center justify-center rounded-md p-2.5 text-slate-700 md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
+              ref={buttonRef}
+              className="flex items-center justify-center rounded-md p-2.5 text-slate-700 md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
             <span className="sr-only">Toggle menu</span>
             {isMenuOpen ? (
               <svg
@@ -93,8 +126,12 @@ export function Navbar() {
         </div>
       </div>
       {isMenuOpen && (
-        <div className="container md:hidden">
-          <nav className="flex flex-col gap-4 pb-6">
+          <div
+              ref={menuRef}
+              className="fixed top-16 inset-x-0 z-40 bg-white shadow-md md:hidden animate-slide-down"
+            >
+             <nav className="flex flex-col gap-4 py-6 px-6">
+
             <Link
               href="/"
               className="text-sm font-medium text-slate-700 transition-colors hover:text-[#008751]"
