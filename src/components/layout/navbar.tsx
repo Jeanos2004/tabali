@@ -39,6 +39,13 @@ export function Navbar() {
             >
               Tableau de bord
             </Link>
+            <Link
+              href="/contact"
+              className="text-sm font-medium text-slate-700 transition-colors hover:text-[#008751]"
+            >
+              Contactez-Nous
+            </Link>
+
           </nav>
         </div>
         <div className="flex items-center gap-4">
