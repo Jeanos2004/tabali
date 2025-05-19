@@ -53,7 +53,7 @@ export default function RootClientLayout({ children }: { children: React.ReactNo
   return (
     <Suspense fallback={
       <html>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
+        <body className="font-sans antialiased min-h-screen flex flex-col">
           <Navbar />
           <main className="flex-1">
             <div className="container py-8 flex justify-center">

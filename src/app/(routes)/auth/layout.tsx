@@ -1,16 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// Suppression de l'import des polices Google qui cause des problèmes avec Turbopack
+// Nous utiliserons des polices via CSS standard à la place
 
 export const metadata: Metadata = {
   title: "Tabali - Authentification",
@@ -23,12 +15,10 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}>
-        <main className="flex-1">
-          <Suspense>{children}</Suspense>
-        </main>
-      </body>
-    </html>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-1">
+        <Suspense>{children}</Suspense>
+      </main>
+    </div>
   );
 }
