@@ -47,7 +47,7 @@ function SearchContent() {
   };
 
   return (
-    <div className="container py-8 md:py-12 mx-auto">
+    <div className="container max-w-7xl py-8 px-4 sm:px-6 lg:px-8 md:py-12 mx-auto">
       <div className="mb-8">
         <span className="tabali-badge tabali-badge-secondary inline-block mb-4">
           Recherche avancée

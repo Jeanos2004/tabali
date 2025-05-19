@@ -51,7 +51,7 @@ export function SearchFilters({
             </label>
             <select
               id="service"
-              className="block w-full rounded-md border-tabali-border shadow-tabali-sm focus:border-tabali-primary focus:ring-tabali-primary sm:text-sm"
+              className="block w-full px-4 py-2 rounded-md border-tabali-border shadow-tabali-sm focus:border-tabali-primary focus:ring-tabali-primary sm:text-sm"
               value={filters.service}
               onChange={(e) => handleFilterChange("service", e.target.value)}
             >
@@ -69,7 +69,7 @@ export function SearchFilters({
             </label>
             <select
               id="location"
-              className="block w-full rounded-md border-tabali-border shadow-tabali-sm focus:border-tabali-primary focus:ring-tabali-primary sm:text-sm"
+              className="block w-full px-4 py-2 rounded-md border-tabali-border shadow-tabali-sm focus:border-tabali-primary focus:ring-tabali-primary sm:text-sm"
               value={filters.location}
               onChange={(e) => handleFilterChange("location", e.target.value)}
             >
