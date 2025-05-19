@@ -15,7 +15,6 @@ interface AuthFormProps {
   onSocialLogin?: (provider: "google" | "facebook") => void;
 }
 
-
 export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
   const [formData, setFormData] = useState({
     // Étape 1 - Informations de base
@@ -88,6 +87,14 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
       });
     }
   };
+
+  // Style commun pour tous les champs de formulaire
+  const inputBaseClasses =
+    "block w-full px-4 py-3 border rounded-lg shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-offset-1";
+  const inputValidClasses =
+    "border-slate-300 focus:border-[#008751] focus:ring-[#008751]";
+  const inputErrorClasses =
+    "border-red-300 focus:border-red-500 focus:ring-red-500";
 
   const handleServiceChange = (service: string) => {
     const updatedServices = formData.services.includes(service)
@@ -288,20 +295,19 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
               : "Créez un compte pour utiliser Tabali"}
           </p>
         </div>
-       
+
         {/* Boutons d'authentification sociale */}
-        <div className="mb-6 space-y-3">
+        <div className="mb-6 space-y-4">
           <Button
             variant="outline"
-            className="w-full flex items-center justify-center"
+            className="w-full h-12 flex items-center justify-center gap-3 transition-colors hover:bg-gray-100"
             onClick={() => handleSocialLogin("google")}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              width="24"
-              height="24"
-              className="mr-2"
+              width="20"
+              height="20"
             >
               <path
                 fill="#4285F4"
@@ -320,29 +326,29 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
               />
             </svg>
-            Continuer avec Google
+            <span className="font-medium text-sm">Continuer avec Google</span>
           </Button>
+
           <Button
             variant="outline"
-            className="w-full flex items-center justify-center"
+            className="w-full h-12 flex items-center justify-center gap-3 transition-colors hover:bg-blue-50"
             onClick={() => handleSocialLogin("facebook")}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              width="24"
-              height="24"
-              className="mr-2"
+              width="20"
+              height="20"
             >
               <path
                 fill="#1877F2"
                 d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
               />
             </svg>
-            Continuer avec Facebook
+            <span className="font-medium text-sm">Continuer avec Facebook</span>
           </Button>
         </div>
-         {/* Séparateur */}
+        {/* Séparateur */}
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-slate-200"></div>
@@ -386,7 +392,6 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
             })}
           </div>
         )}
-        
 
         {step === 1 && (
           <motion.div
@@ -396,10 +401,10 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
             transition={{ duration: 0.3 }}
             className="space-y-4"
           >
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Email
               </label>
@@ -407,23 +412,21 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 type="email"
                 id="email"
                 name="email"
-                className={`block w-full rounded-md shadow-sm sm:text-sm ${
-                  errors.email
-                    ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                    : "border-slate-300 focus:border-[#008751] focus:ring-[#008751]"
+                className={`${inputBaseClasses} ${
+                  errors.email ? inputErrorClasses : inputValidClasses
                 }`}
                 value={formData.email}
                 onChange={handleChange}
+                placeholder="votre@email.com"
               />
               {errors.email && (
-                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                <p className="mt-2 text-sm text-red-600">{errors.email}</p>
               )}
             </div>
-
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Mot de passe
               </label>
@@ -431,24 +434,23 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 type="password"
                 id="password"
                 name="password"
-                className={`block w-full rounded-md shadow-sm sm:text-sm ${
-                  errors.password
-                    ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                    : "border-slate-300 focus:border-[#008751] focus:ring-[#008751]"
+                className={`${inputBaseClasses} ${
+                  errors.password ? inputErrorClasses : inputValidClasses
                 }`}
                 value={formData.password}
                 onChange={handleChange}
+                placeholder="Votre mot de passe"
               />
               {errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+                <p className="mt-2 text-sm text-red-600">{errors.password}</p>
               )}
             </div>
 
             {type === "register" && (
-              <div>
+              <div className="form-group">
                 <label
                   htmlFor="confirmPassword"
-                  className="block text-sm font-medium text-slate-700 mb-1"
+                  className="block text-base font-medium text-slate-700 mb-2"
                 >
                   Confirmer le mot de passe
                 </label>
@@ -456,16 +458,17 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                   type="password"
                   id="confirmPassword"
                   name="confirmPassword"
-                  className={`block w-full rounded-md shadow-sm sm:text-sm ${
+                  className={`${inputBaseClasses} ${
                     errors.confirmPassword
-                      ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                      : "border-slate-300 focus:border-[#008751] focus:ring-[#008751]"
+                      ? inputErrorClasses
+                      : inputValidClasses
                   }`}
                   value={formData.confirmPassword}
                   onChange={handleChange}
+                  placeholder="Confirmez votre mot de passe"
                 />
                 {errors.confirmPassword && (
-                  <p className="mt-1 text-sm text-red-600">
+                  <p className="mt-2 text-sm text-red-600">
                     {errors.confirmPassword}
                   </p>
                 )}
@@ -473,7 +476,6 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
             )}
           </motion.div>
         )}
-
         {step === 2 && (
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -482,10 +484,10 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
             transition={{ duration: 0.3 }}
             className="space-y-4"
           >
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Nom complet
               </label>
@@ -493,23 +495,22 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 type="text"
                 id="name"
                 name="name"
-                className={`block w-full rounded-md shadow-sm sm:text-sm ${
-                  errors.name
-                    ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                    : "border-slate-300 focus:border-[#008751] focus:ring-[#008751]"
+                className={`${inputBaseClasses} ${
+                  errors.name ? inputErrorClasses : inputValidClasses
                 }`}
                 value={formData.name}
                 onChange={handleChange}
+                placeholder="Prénom et Nom"
               />
               {errors.name && (
-                <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+                <p className="mt-2 text-sm text-red-600">{errors.name}</p>
               )}
             </div>
 
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="phone"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Numéro de téléphone
               </label>
@@ -517,24 +518,22 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 type="tel"
                 id="phone"
                 name="phone"
-                className={`block w-full rounded-md shadow-sm sm:text-sm ${
-                  errors.phone
-                    ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                    : "border-slate-300 focus:border-[#008751] focus:ring-[#008751]"
+                className={`${inputBaseClasses} ${
+                  errors.phone ? inputErrorClasses : inputValidClasses
                 }`}
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="Ex: 0612345678"
               />
               {errors.phone && (
-                <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
+                <p className="mt-2 text-sm text-red-600">{errors.phone}</p>
               )}
             </div>
 
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="address"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Adresse
               </label>
@@ -542,23 +541,22 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 type="text"
                 id="address"
                 name="address"
-                className={`block w-full rounded-md shadow-sm sm:text-sm ${
-                  errors.address
-                    ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                    : "border-slate-300 focus:border-[#008751] focus:ring-[#008751]"
+                className={`${inputBaseClasses} ${
+                  errors.address ? inputErrorClasses : inputValidClasses
                 }`}
                 value={formData.address}
                 onChange={handleChange}
+                placeholder="Votre adresse complète"
               />
               {errors.address && (
-                <p className="mt-1 text-sm text-red-600">{errors.address}</p>
+                <p className="mt-2 text-sm text-red-600">{errors.address}</p>
               )}
             </div>
 
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="city"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Ville/Quartier
               </label>
@@ -566,40 +564,39 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 type="text"
                 id="city"
                 name="city"
-                className={`block w-full rounded-md shadow-sm sm:text-sm ${
-                  errors.city
-                    ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                    : "border-slate-300 focus:border-[#008751] focus:ring-[#008751]"
+                className={`${inputBaseClasses} ${
+                  errors.city ? inputErrorClasses : inputValidClasses
                 }`}
                 value={formData.city}
                 onChange={handleChange}
+                placeholder="Votre ville ou quartier"
               />
               {errors.city && (
-                <p className="mt-1 text-sm text-red-600">{errors.city}</p>
+                <p className="mt-2 text-sm text-red-600">{errors.city}</p>
               )}
             </div>
 
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="profilePicture"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Photo de profil{" "}
                 {formData.userType === "provider"
                   ? "(Obligatoire)"
                   : "(Optionnel)"}
               </label>
-              <div className="mt-1 flex items-center">
+              <div className="mt-2 flex items-center">
                 {profilePreview ? (
                   <div className="relative">
                     <img
                       src={profilePreview}
                       alt="Aperçu du profil"
-                      className="h-16 w-16 rounded-full object-cover"
+                      className="h-20 w-20 rounded-full object-cover border-2 border-[#008751]"
                     />
                     <button
                       type="button"
-                      className="absolute -top-2 -right-2 rounded-full bg-red-500 text-white p-1 w-5 h-5 flex items-center justify-center text-xs"
+                      className="absolute -top-2 -right-2 rounded-full bg-red-500 text-white p-1 w-6 h-6 flex items-center justify-center text-xs"
                       onClick={() => {
                         setFormData({ ...formData, profilePicture: null });
                         setProfilePreview(null);
@@ -609,13 +606,13 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                     </button>
                   </div>
                 ) : (
-                  <span className="h-16 w-16 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
-                    <Camera size={24} className="text-gray-400" />
+                  <span className="h-20 w-20 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center border-2 border-dashed border-gray-300">
+                    <Camera size={32} className="text-gray-400" />
                   </span>
                 )}
                 <label
                   htmlFor="profile-upload"
-                  className="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#008751] focus:ring-offset-2 cursor-pointer"
+                  className="ml-5 rounded-md border border-gray-300 bg-white py-3 px-4 text-base font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#008751] focus:ring-offset-2 cursor-pointer transition-all"
                 >
                   Choisir une photo
                 </label>
@@ -629,23 +626,23 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 />
               </div>
               {errors.profilePicture && (
-                <p className="mt-1 text-sm text-red-600">
+                <p className="mt-2 text-sm text-red-600">
                   {errors.profilePicture}
                 </p>
               )}
             </div>
 
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="userType"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Type de compte
               </label>
               <select
                 id="userType"
                 name="userType"
-                className="block w-full rounded-md border-slate-300 shadow-sm focus:border-[#008751] focus:ring-[#008751] sm:text-sm"
+                className={`${inputBaseClasses} ${inputValidClasses} cursor-pointer bg-white`}
                 value={formData.userType}
                 onChange={handleChange}
               >
@@ -664,11 +661,11 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
             transition={{ duration: 0.3 }}
             className="space-y-4"
           >
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+            <div className="form-group">
+              <label className="block text-base font-medium text-slate-700 mb-2">
                 Types de services proposés
               </label>
-              <div className="mt-2 grid grid-cols-2 gap-2">
+              <div className="mt-2 grid grid-cols-2 gap-3 border border-slate-200 rounded-lg p-4 bg-slate-50">
                 {availableServices.map((service) => (
                   <div key={service} className="flex items-center">
                     <input
@@ -676,11 +673,11 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                       type="checkbox"
                       checked={formData.services.includes(service)}
                       onChange={() => handleServiceChange(service)}
-                      className="h-4 w-4 text-[#008751] focus:ring-[#008751] border-gray-300 rounded"
+                      className="h-5 w-5 text-[#008751] focus:ring-[#008751] border-gray-300 rounded"
                     />
                     <label
                       htmlFor={`service-${service}`}
-                      className="ml-2 block text-sm text-gray-700"
+                      className="ml-2 block text-base text-gray-700"
                     >
                       {service}
                     </label>
@@ -688,39 +685,37 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 ))}
               </div>
               {errors.services && (
-                <p className="mt-1 text-sm text-red-600">{errors.services}</p>
+                <p className="mt-2 text-sm text-red-600">{errors.services}</p>
               )}
             </div>
 
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="experience"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Description de votre expérience
               </label>
               <textarea
                 id="experience"
                 name="experience"
-                rows={3}
-                className={`block w-full rounded-md shadow-sm sm:text-sm ${
-                  errors.experience
-                    ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                    : "border-slate-300 focus:border-[#008751] focus:ring-[#008751]"
-                }`}
+                rows={4}
+                className={`${inputBaseClasses} ${
+                  errors.experience ? inputErrorClasses : inputValidClasses
+                } resize-none`}
                 value={formData.experience}
                 onChange={handleChange}
                 placeholder="Parlez brièvement de votre expérience professionnelle..."
               />
               {errors.experience && (
-                <p className="mt-1 text-sm text-red-600">{errors.experience}</p>
+                <p className="mt-2 text-sm text-red-600">{errors.experience}</p>
               )}
             </div>
 
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="serviceRadius"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Zone d&apos;intervention (rayon en km): {formData.serviceRadius}{" "}
                 km
@@ -732,16 +727,20 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 min="1"
                 max="50"
                 step="1"
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#008751]"
                 value={formData.serviceRadius}
                 onChange={handleChange}
               />
+              <div className="flex justify-between mt-1 text-xs text-gray-500">
+                <span>1 km</span>
+                <span>50 km</span>
+              </div>
             </div>
 
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="rates"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Tarifs indicatifs
               </label>
@@ -749,22 +748,20 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 type="text"
                 id="rates"
                 name="rates"
-                className={`block w-full rounded-md shadow-sm sm:text-sm ${
-                  errors.rates
-                    ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-                    : "border-slate-300 focus:border-[#008751] focus:ring-[#008751]"
+                className={`${inputBaseClasses} ${
+                  errors.rates ? inputErrorClasses : inputValidClasses
                 }`}
                 value={formData.rates}
                 onChange={handleChange}
                 placeholder="Ex: 50-100 GNF/heure, forfait à partir de 200 GNF, etc."
               />
               {errors.rates && (
-                <p className="mt-1 text-sm text-red-600">{errors.rates}</p>
+                <p className="mt-2 text-sm text-red-600">{errors.rates}</p>
               )}
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+            <div className="form-group">
+              <label className="block text-base font-medium text-slate-700 mb-2">
                 Disponibilités
               </label>
               {errors.availability && (
@@ -772,7 +769,7 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                   {errors.availability}
                 </p>
               )}
-              <div className="space-y-2">
+              <div className="space-y-3 border border-slate-200 rounded-lg p-4 bg-slate-50">
                 {Object.keys(formData.availability).map((day) => {
                   const dayKey = day as keyof typeof formData.availability;
                   const dayData = formData.availability[dayKey];
@@ -787,7 +784,7 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                   };
 
                   return (
-                    <div key={day} className="flex items-center space-x-2">
+                    <div key={day} className="flex items-center space-x-3">
                       <input
                         type="checkbox"
                         id={`day-${day}`}
@@ -799,15 +796,15 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                             e.target.checked
                           )
                         }
-                        className="h-4 w-4 text-[#008751] focus:ring-[#008751] border-gray-300 rounded"
+                        className="h-5 w-5 text-[#008751] focus:ring-[#008751] border-gray-300 rounded"
                       />
                       <label
                         htmlFor={`day-${day}`}
-                        className="w-24 text-sm text-gray-700"
+                        className="w-24 text-base text-gray-700"
                       >
                         {dayNames[day]}
                       </label>
-                      <div className="flex space-x-2 items-center">
+                      <div className="flex space-x-2 items-center flex-1">
                         <input
                           type="time"
                           id={`time-from-${day}`}
@@ -820,9 +817,11 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                             )
                           }
                           disabled={!dayData.enabled}
-                          className="text-sm p-1 border rounded"
+                          className={`${inputBaseClasses} ${inputValidClasses} text-base p-2 flex-1 ${
+                            !dayData.enabled ? "bg-gray-100 opacity-60" : ""
+                          }`}
                         />
-                        <span className="text-sm">à</span>
+                        <span className="text-base">à</span>
                         <input
                           type="time"
                           id={`time-to-${day}`}
@@ -831,7 +830,9 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                             handleAvailabilityChange(day, "to", e.target.value)
                           }
                           disabled={!dayData.enabled}
-                          className="text-sm p-1 border rounded"
+                          className={`${inputBaseClasses} ${inputValidClasses} text-base p-2 flex-1 ${
+                            !dayData.enabled ? "bg-gray-100 opacity-60" : ""
+                          }`}
                         />
                       </div>
                     </div>
@@ -840,24 +841,24 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
               </div>
             </div>
 
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="idCard"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Pièce d&apos;identité (CNI) - Obligatoire
               </label>
-              <div className="mt-1 flex items-center">
+              <div className="mt-2 flex items-center">
                 {idCardPreview ? (
                   <div className="relative">
                     <img
                       src={idCardPreview}
                       alt="Aperçu de la pièce d'identité"
-                      className="h-20 object-cover rounded border border-gray-300"
+                      className="h-24 object-cover rounded-lg border-2 border-[#008751]"
                     />
                     <button
                       type="button"
-                      className="absolute -top-2 -right-2 rounded-full bg-red-500 text-white p-1 w-5 h-5 flex items-center justify-center text-xs"
+                      className="absolute -top-2 -right-2 rounded-full bg-red-500 text-white p-1 w-6 h-6 flex items-center justify-center text-xs"
                       onClick={() => {
                         setFormData({ ...formData, idCard: null });
                         setIdCardPreview(null);
@@ -867,13 +868,13 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                     </button>
                   </div>
                 ) : (
-                  <div className="h-20 w-32 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center bg-gray-50">
-                    <span className="text-gray-500 text-sm">ID</span>
+                  <div className="h-24 w-40 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-gray-50">
+                    <span className="text-gray-500 text-base">ID</span>
                   </div>
                 )}
                 <label
                   htmlFor="id-upload"
-                  className="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#008751] focus:ring-offset-2 cursor-pointer"
+                  className="ml-5 rounded-md border border-gray-300 bg-white py-3 px-4 text-base font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#008751] focus:ring-offset-2 cursor-pointer transition-all"
                 >
                   Télécharger CNI
                 </label>
@@ -887,28 +888,28 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 />
               </div>
               {errors.idCard && (
-                <p className="mt-1 text-sm text-red-600">{errors.idCard}</p>
+                <p className="mt-2 text-sm text-red-600">{errors.idCard}</p>
               )}
             </div>
 
-            <div>
+            <div className="form-group">
               <label
                 htmlFor="selfie"
-                className="block text-sm font-medium text-slate-700 mb-1"
+                className="block text-base font-medium text-slate-700 mb-2"
               >
                 Photo selfie (pour vérification d&apos;identité) - Obligatoire
               </label>
-              <div className="mt-1 flex items-center">
+              <div className="mt-2 flex items-center">
                 {selfiePreview ? (
                   <div className="relative">
                     <img
                       src={selfiePreview}
                       alt="Aperçu du selfie"
-                      className="h-16 w-16 rounded-full object-cover"
+                      className="h-20 w-20 rounded-full object-cover border-2 border-[#008751]"
                     />
                     <button
                       type="button"
-                      className="absolute -top-2 -right-2 rounded-full bg-red-500 text-white p-1 w-5 h-5 flex items-center justify-center text-xs"
+                      className="absolute -top-2 -right-2 rounded-full bg-red-500 text-white p-1 w-6 h-6 flex items-center justify-center text-xs"
                       onClick={() => {
                         setFormData({ ...formData, selfie: null });
                         setSelfiePreview(null);
@@ -918,13 +919,13 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                     </button>
                   </div>
                 ) : (
-                  <span className="h-16 w-16 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
-                    <Camera size={24} className="text-gray-400" />
+                  <span className="h-20 w-20 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center border-2 border-dashed border-gray-300">
+                    <Camera size={32} className="text-gray-400" />
                   </span>
                 )}
                 <label
                   htmlFor="selfie-upload"
-                  className="ml-5 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#008751] focus:ring-offset-2 cursor-pointer"
+                  className="ml-5 rounded-md border border-gray-300 bg-white py-3 px-4 text-base font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#008751] focus:ring-offset-2 cursor-pointer transition-all"
                 >
                   Prendre un selfie
                 </label>
@@ -938,15 +939,19 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
                 />
               </div>
               {errors.selfie && (
-                <p className="mt-1 text-sm text-red-600">{errors.selfie}</p>
+                <p className="mt-2 text-sm text-red-600">{errors.selfie}</p>
               )}
             </div>
           </motion.div>
         )}
 
-        <div className="mt-6 flex justify-between">
+        <div className="mt-8 flex justify-between">
           {step > 1 && type === "register" ? (
-            <Button variant="outline" onClick={handlePrevStep}>
+            <Button
+              variant="outline"
+              onClick={handlePrevStep}
+              className="px-6 py-3 text-base"
+            >
               Retour
             </Button>
           ) : (
@@ -955,14 +960,14 @@ export function AuthForm({ type, onSubmit, onSocialLogin }: AuthFormProps) {
 
           {type === "login" ? (
             <Button
-              className="w-full bg-[#008751] hover:bg-[#006b40]"
+              className="w-full bg-[#008751] hover:bg-[#006b40] px-6 py-3 text-base transition-all"
               onClick={handleSubmit}
             >
               Se connecter
             </Button>
           ) : (
             <Button
-              className="bg-[#008751] hover:bg-[#006b40]"
+              className="bg-[#008751] hover:bg-[#006b40] px-6 py-3 text-base transition-all"
               onClick={handleNextStep}
             >
               {step < totalSteps ? "Continuer" : "S'inscrire"}
