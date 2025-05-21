@@ -167,6 +167,13 @@ export function Navbar() {
             >
               Tableau de bord
             </Link>
+            <Link
+              href="/contact"
+              className="text-sm font-medium text-slate-700 transition-colors hover:text-[#008751]"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contactez-nous
+            </Link>
             <div className="flex flex-col gap-2 pt-2">
               <Link href="/auth/login" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="outline" className="w-full">Connexion</Button>
