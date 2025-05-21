@@ -34,7 +34,7 @@ export default function ContactPage() {
         sujet: '',
         message: '',
       });
-    } catch (err) {
+    } catch {
       setError("Une erreur s'est produite. Veuillez réessayer.");
     } finally {
       setLoading(false);
