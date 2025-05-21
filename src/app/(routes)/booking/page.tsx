@@ -1,9 +1,210 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import BookingForm from "@/components/ui/booking-form";
+import { useSearchParams } from "next/navigation";
+import { MOCK_PROVIDERS } from "@/lib/constants";
+import { Provider } from "@/types";
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
+
+// TimeSlot type
+type TimeSlot = {
+  start: string;
+  end: string;
+};
+
+// Composant pour la sélection de date et heure
+function DateTimeSelection({
+  onDateTimeChange,
+}: {
+  onDateTimeChange: (dateTimeData: {
+    date: Date | undefined;
+    timeSlot: TimeSlot;
+    isComplete: boolean;
+  }) => void;
+}) {
+  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [timeSlot, setTimeSlot] = useState<TimeSlot>({ start: "", end: "" });
+  
+  // Liste des créneaux horaires disponibles
+  const availableTimeSlots: TimeSlot[] = [
+    { start: "09:00", end: "10:00" },
+    { start: "10:00", end: "11:00" },
+    { start: "11:00", end: "12:00" },
+    { start: "14:00", end: "15:00" },
+    { start: "15:00", end: "16:00" },
+    { start: "16:00", end: "17:00" },
+    { start: "17:00", end: "18:00" },
+  ];
+
+  useEffect(() => {
+    const isComplete = date !== undefined && timeSlot.start !== "";
+    onDateTimeChange({
+      date,
+      timeSlot,
+      isComplete,
+    });
+  }, [date, timeSlot, onDateTimeChange]);
+
+  // Implémentation d'un sélecteur de date simplifié
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDate(e.target.value ? new Date(e.target.value) : undefined);
+  };
+
+  return (
+    <Card>
+      <CardContent className="p-6">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="space-y-6"
+        >
+          <div>
+            <h3 className="text-lg font-medium text-slate-800 mb-4">
+              Sélectionnez une date
+            </h3>
+            <input
+              type="date"
+              value={date ? date.toISOString().split('T')[0] : ''}
+              onChange={handleDateChange}
+              min={new Date().toISOString().split('T')[0]}
+              className="w-full rounded-md border-slate-300 shadow-sm focus:border-[#008751] focus:ring-[#008751] sm:text-sm"
+            />
+          </div>
+
+          {date && (
+            <div>
+              <h3 className="text-lg font-medium text-slate-800 mb-4">
+                Sélectionnez un créneau horaire
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {availableTimeSlots.map((slot) => (
+                  <button
+                    key={`${slot.start}-${slot.end}`}
+                    onClick={() => setTimeSlot(slot)}
+                    className={`py-2 px-3 rounded-md text-sm font-medium transition-colors duration-200 ${
+                      timeSlot.start === slot.start
+                        ? "bg-[#008751] text-white"
+                        : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+                    }`}
+                  >
+                    {slot.start} - {slot.end}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </motion.div>
+      </CardContent>
+    </Card>
+  );
+}
+
+// Composant de confirmation
+type BookingData = {
+  service: string;
+  address: string;
+  description: string;
+  paymentMethod: string;
+  cardNumber?: string;
+  cardHolder?: string;
+  expiryDate?: string;
+  cvv?: string;
+  mobileNumber?: string;
+  date: string;
+  timeSlot: {
+    start: string;
+    end: string;
+  };
+  isFormComplete: boolean;
+  isDateTimeComplete: boolean;
+};
+
+function ConfirmationStep({
+  bookingData,
+  provider,
+}: {
+  bookingData: BookingData;
+  provider: Provider | null;
+}) {
+  // Fonction pour formatter l'affichage de la méthode de paiement
+  const getPaymentMethodDisplay = () => {
+    switch (bookingData.paymentMethod) {
+      case "card":
+        return `Carte bancaire ${bookingData.cardNumber ? `(se terminant par ${bookingData.cardNumber.replace(/\s/g, "").slice(-4)})` : ""}`;
+      case "paypal":
+        return "PayPal";
+      case "orangemoney":
+        return `Orange Money ${bookingData.mobileNumber ? `(${bookingData.mobileNumber})` : ""}`;
+      case "mobilemoney":
+        return `Mobile Money ${bookingData.mobileNumber ? `(${bookingData.mobileNumber})` : ""}`;
+      case "paycard":
+        return "PayCard";
+      default:
+        return "Non spécifiée";
+    }
+  };
+
+  return (
+    <Card>
+      <CardContent className="p-6">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="space-y-6"
+        >
+          <h3 className="text-lg font-medium text-slate-800">
+            Récapitulatif de votre réservation
+          </h3>
+
+          <div className="space-y-4">
+            {provider && (
+              <div>
+                <h4 className="text-sm font-medium text-slate-500">Prestataire</h4>
+                <p className="text-slate-800">{provider.name}</p>
+              </div>
+            )}
+
+            <div>
+              <h4 className="text-sm font-medium text-slate-500">Service</h4>
+              <p className="text-slate-800">{bookingData.service}</p>
+            </div>
+
+            <div>
+              <h4 className="text-sm font-medium text-slate-500">Adresse</h4>
+              <p className="text-slate-800">{bookingData.address}</p>
+            </div>
+
+            {bookingData.description && (
+              <div>
+                <h4 className="text-sm font-medium text-slate-500">Description</h4>
+                <p className="text-slate-800">{bookingData.description}</p>
+              </div>
+            )}
+
+            <div>
+              <h4 className="text-sm font-medium text-slate-500">Date et heure</h4>
+              <p className="text-slate-800">
+                {bookingData.date && new Date(bookingData.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}{" "}
+                de {bookingData.timeSlot.start} à {bookingData.timeSlot.end}
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-sm font-medium text-slate-500">Méthode de paiement</h4>
+              <p className="text-slate-800">{getPaymentMethodDisplay()}</p>
+            </div>
+          </div>
+        </motion.div>
+      </CardContent>
+    </Card>
+  );
+}
 
 // Composant client séparé qui utilise useSearchParams
 function BookingContent() {
@@ -17,6 +218,12 @@ function BookingContent() {
     service: "",
     address: "",
     description: "",
+    paymentMethod: "card",
+    cardNumber: "",
+    cardHolder: "",
+    expiryDate: "",
+    cvv: "",
+    mobileNumber: "",
     date: "",
     timeSlot: {
       start: "",
@@ -26,8 +233,19 @@ function BookingContent() {
     isDateTimeComplete: false,
   });
 
+  // Liste des services disponibles (normalement chargée depuis une API)
+  const availableServices = [
+    "Plomberie",
+    "Électricité",
+    "Peinture",
+    "Jardinage",
+    "Ménage",
+    "Déménagement",
+    "Bricolage"
+  ];
+
   useEffect(() => {
-    // Simuler un chargement de données
+    // Simulation d'un chargement de données
     const timer = setTimeout(() => {
       if (providerId) {
         const foundProvider = MOCK_PROVIDERS.find((p) => p.id === providerId);
@@ -39,8 +257,64 @@ function BookingContent() {
     return () => clearTimeout(timer);
   }, [providerId]);
 
-  // Supprimer toutes les fonctions non utilisées
-  // _handleFormChange, _handleDateTimeChange, _handleNextStep, _handlePreviousStep, _handleSubmit
+  const handleFormChange = (formData: {
+    service: string;
+    address: string;
+    description: string;
+    paymentMethod: string;
+    cardNumber?: string;
+    cardHolder?: string;
+    expiryDate?: string;
+    cvv?: string;
+    mobileNumber?: string;
+    isComplete: boolean;
+  }) => {
+    setBookingData({
+      ...bookingData,
+      service: formData.service,
+      address: formData.address,
+      description: formData.description,
+      paymentMethod: formData.paymentMethod,
+      cardNumber: formData.cardNumber || "",
+      cardHolder: formData.cardHolder || "",
+      expiryDate: formData.expiryDate || "",
+      cvv: formData.cvv || "",
+      mobileNumber: formData.mobileNumber || "",
+      isFormComplete: formData.isComplete,
+    });
+  };
+
+  const handleDateTimeChange = (dateTimeData: {
+    date: Date | undefined;
+    timeSlot: TimeSlot;
+    isComplete: boolean;
+  }) => {
+    setBookingData({
+      ...bookingData,
+      date: dateTimeData.date ? dateTimeData.date.toISOString() : "",
+      timeSlot: dateTimeData.timeSlot,
+      isDateTimeComplete: dateTimeData.isComplete,
+    });
+  };
+
+  const handleNextStep = () => {
+    if (currentStep < 3) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const handlePreviousStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleSubmit = () => {
+    // Ici, on fera un appel API pour enregistrer la réservation
+    console.log("Réservation soumise:", bookingData);
+    //  afficher un message de succès pour l'instant
+    alert("Réservation confirmée ! Merci pour votre confiance.");
+  };
 
   if (isLoading) {
     return (
@@ -111,18 +385,54 @@ function BookingContent() {
             ))}
           </div>
 
-          {/* Le reste du composant reste inchangé */}
-          {/* ... */}
+          {currentStep === 1 && (
+            <BookingForm 
+              onFormChange={handleFormChange} 
+              services={availableServices} 
+            />
+          )}
+
+          {currentStep === 2 && (
+            <DateTimeSelection onDateTimeChange={handleDateTimeChange} />
+          )}
+
+          {currentStep === 3 && (
+            <ConfirmationStep bookingData={bookingData} provider={provider} />
+          )}
+
+          <div className="mt-8 flex justify-between">
+            {currentStep > 1 ? (
+              <Button 
+                variant="outline" 
+                onClick={handlePreviousStep}
+              >
+                Précédent
+              </Button>
+            ) : (
+              <div></div>
+            )}
+            
+            {currentStep < 3 ? (
+              <Button
+                onClick={handleNextStep}
+                disabled={
+                  (currentStep === 1 && !bookingData.isFormComplete) ||
+                  (currentStep === 2 && !bookingData.isDateTimeComplete)
+                }
+              >
+                Suivant
+              </Button>
+            ) : (
+              <Button onClick={handleSubmit}>
+                Confirmer la réservation
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
-// Ajout des imports manquants
-import { useSearchParams } from "next/navigation";
-import { MOCK_PROVIDERS } from "@/lib/constants";
-import { Provider } from "@/types";
 
 // Page principale avec Suspense
 export default function BookingPage() {
@@ -132,5 +442,3 @@ export default function BookingPage() {
     </Suspense>
   );
 }
-
-// Le reste du fichier reste inchangé
