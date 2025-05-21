@@ -52,17 +52,15 @@ import { useSearchParams } from "next/navigation";
 export default function RootClientLayout({ children }: { children: React.ReactNode }) {
   return (
     <Suspense fallback={
-      <html>
-        <body className="font-sans antialiased min-h-screen flex flex-col">
-          <Navbar />
+      <body className="font-sans antialiased min-h-screen flex flex-col">
+        <Navbar />
           <main className="flex-1">
             <div className="container py-8 flex justify-center">
               <div className="w-12 h-12 border-t-2 border-b-2 border-[#008751] rounded-full animate-spin"></div>
             </div>
           </main>
-          <Footer />
-        </body>
-      </html>
+        <Footer />
+      </body>
     }>
       <RootClientLayoutContent>{children}</RootClientLayoutContent>
     </Suspense>
