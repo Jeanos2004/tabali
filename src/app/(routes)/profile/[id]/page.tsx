@@ -19,7 +19,6 @@ export default function ProviderProfilePage() {
   const providerId = params.id as string;
   const [provider, setProvider] = useState<Provider | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"services" | "reviews" | "gallery">("services");
 
   useEffect(() => {
     // Simuler un chargement de données
