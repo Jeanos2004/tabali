@@ -26,18 +26,66 @@ export function ServicesGrid() {
       opacity: 1, 
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
         damping: 10
       }
     },
   };
 
+  // Fonction pour obtenir la description spécifique de chaque service
+  function getDescriptionForService(serviceName: string): string {
+    switch(serviceName) {
+      case 'Ménage':
+        return 'Nettoyage professionnel de votre domicile ou bureau. Services de ménage régulier, grand nettoyage et entretien personnalisé.';
+      case 'Plomberie':
+        return 'Installation, réparation et maintenance de vos systèmes de plomberie. Intervention rapide pour fuites, canalisations et équipements sanitaires.';
+      case 'Électricité':
+        return 'Services électriques complets : installation, dépannage, mise aux normes et maintenance de vos équipements électriques en toute sécurité.';
+      case 'Jardinage':
+        return 'Entretien et aménagement de vos espaces verts. Taille, plantation, arrosage et création de jardins sur mesure.';
+      case 'Peinture':
+        return 'Travaux de peinture intérieure et extérieure. Rénovation, décoration et finitions de qualité pour tous types de surfaces.';
+      case 'Maçonnerie':
+        return 'Construction et rénovation en maçonnerie. Fondations, murs, dalles et tous travaux de gros œuvre par des professionnels qualifiés.';
+      case 'Menuiserie':
+        return 'Fabrication et installation sur mesure. Portes, fenêtres, placards, escaliers et tous travaux de menuiserie bois et PVC.';
+      case 'Couture':
+        return 'Services de couture et retouches professionnelles. Création, ajustement et réparation de vêtements par des couturières expertes.';
+      case 'Coiffure':
+        return 'Services de coiffure à domicile ou en salon. Coupes, colorations, coiffages et soins capillaires par des coiffeurs qualifiés.';
+      case 'Mécanique Auto':
+        return 'Réparation et entretien automobile. Diagnostic, révision, réparation moteur et maintenance complète de votre véhicule.';
+      case 'Livraison':
+        return 'Services de livraison rapide et sécurisée. Transport de colis, courses et livraisons express dans toute la région.';
+      case 'Déménagement':
+        return 'Services de déménagement complets. Emballage, transport sécurisé et installation dans votre nouveau logement avec une équipe professionnelle.';
+      case 'Sécurité':
+        return 'Services de sécurité et surveillance. Gardiennage, systèmes d\'alarme, vidéosurveillance et protection de vos biens.';
+      case 'Informatique':
+        return 'Dépannage et maintenance informatique. Réparation d\'ordinateurs, installation de logiciels et assistance technique à domicile.';
+      case 'Photographie':
+        return 'Services photographiques professionnels. Événements, portraits, mariages et reportages avec un équipement de qualité.';
+      case 'Traiteur':
+        return 'Services de traiteur pour tous événements. Préparation de repas, buffets, cocktails et restauration sur mesure.';
+      case 'Musique':
+        return 'Services musicaux et animation. Cours de musique, animation événementielle et prestations artistiques personnalisées.';
+      case 'Formation':
+        return 'Cours et formations personnalisés. Soutien scolaire, formation professionnelle et développement de compétences adaptés à vos besoins.';
+      case 'Santé':
+        return 'Services de santé et bien-être à domicile. Soins infirmiers, kinésithérapie et accompagnement médical personnalisé.';
+      case 'Beauté':
+        return 'Services esthétiques et de beauté. Soins du visage, manucure, pédicure et prestations beauté à domicile par des professionnelles.';
+      default:
+        return `Services professionnels de ${serviceName.toLowerCase()} pour particuliers et entreprises.`;
+    }
+  }
+
   // Création d'objets service à partir du tableau SERVICES
   const services = SERVICES.map(serviceName => ({
     id: serviceName.toLowerCase().replace(/\s+/g, '-'),
     name: serviceName,
-    description: `Services professionnels de ${serviceName.toLowerCase()} pour particuliers et entreprises.`,
+    description: getDescriptionForService(serviceName),
     icon: getIconForService(serviceName)
   }));
   
