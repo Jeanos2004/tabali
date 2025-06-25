@@ -14,7 +14,6 @@ export function Navbar() {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -27,17 +26,15 @@ export function Navbar() {
         setIsMenuOpen(false);
       }
     }
-    
-  
+
     if (isMenuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
-  
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isMenuOpen]);
-  
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur-sm flex justify-center">
@@ -71,6 +68,12 @@ export function Navbar() {
             >
               Tableau de bord
             </Link>
+            <Link
+              href="/about"
+              className="text-sm font-medium text-slate-700 transition-colors hover:text-[#008751]"
+            >
+              À propos
+            </Link>
           </nav>
         </div>
         <div className="flex items-center gap-4">
@@ -83,10 +86,10 @@ export function Navbar() {
             </Link>
           </div>
           <button
-              ref={buttonRef}
-              className="flex items-center justify-center rounded-md p-2.5 text-slate-700 md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
+            ref={buttonRef}
+            className="flex items-center justify-center rounded-md p-2.5 text-slate-700 md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
             <span className="sr-only">Toggle menu</span>
             {isMenuOpen ? (
               <svg
@@ -126,12 +129,11 @@ export function Navbar() {
         </div>
       </div>
       {isMenuOpen && (
-          <div
-              ref={menuRef}
-              className="fixed top-16 inset-x-0 z-40 bg-white shadow-md md:hidden animate-slide-down"
-            >
-             <nav className="flex flex-col gap-4 py-6 px-6">
-
+        <div
+          ref={menuRef}
+          className="fixed top-16 inset-x-0 z-40 bg-white shadow-md md:hidden animate-slide-down"
+        >
+          <nav className="flex flex-col gap-4 py-6 px-6">
             <Link
               href="/"
               className="text-sm font-medium text-slate-700 transition-colors hover:text-[#008751]"
@@ -160,9 +162,19 @@ export function Navbar() {
             >
               Tableau de bord
             </Link>
+            <Link
+              href="/about"
+              className="text-sm font-medium text-slate-700 transition-colors hover:text-[#008751]"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              À propos
+            </Link>
+
             <div className="flex flex-col gap-2 pt-2">
               <Link href="/auth/login" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="outline" className="w-full">Connexion</Button>
+                <Button variant="outline" className="w-full">
+                  Connexion
+                </Button>
               </Link>
               <Link href="/auth/register" onClick={() => setIsMenuOpen(false)}>
                 <Button className="w-full">Inscription</Button>
