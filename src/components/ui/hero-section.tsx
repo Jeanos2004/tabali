@@ -49,7 +49,7 @@ export function HeroSection() {
       opacity: 1, 
       y: 0,
       transition: {
-        type: "spring",
+        type: "spring" as "spring",
         stiffness: 100,
         damping: 10
       }
@@ -115,7 +115,7 @@ export function HeroSection() {
             className="text-xl text-white/90 md:text-2xl"
             variants={itemVariants}
           >
-            Tabali connecte particuliers et professionnels en Guinée pour des services de qualité
+            Tabali connecte particuliers et professionnels en Guinée pour des services de qualités
           </motion.p>
           
           <motion.div 
