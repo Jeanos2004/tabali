@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { MOCK_PROVIDERS } from "@/lib/constants";
-import { Calendar, Clock, Star, Heart, CheckCircle, User, Settings, Search } from "lucide-react";
+import { useState, useEffect } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { MOCK_PROVIDERS } from '@/lib/constants';
+import { Calendar, Clock, Star, Heart, CheckCircle, User, Settings, Search } from 'lucide-react';
+import DashboardCharts from '@/components/DashboardCharts';
 
 export default function DashboardPage() {
-  const [userType, setUserType] = useState<"client" | "provider" | "admin">("client");
+  const [userType, setUserType] = useState<'client' | 'provider' | 'admin'>('client');
   const [isLoading, setIsLoading] = useState(true);
   const [stats, setStats] = useState({
     bookings: 0,
@@ -25,16 +26,14 @@ export default function DashboardPage() {
   // Simuler un chargement de données
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Vérifier si l'URL contient un paramètre userType
       const params = new URLSearchParams(window.location.search);
-      const typeParam = params.get("userType");
+      const typeParam = params.get('userType');
       
-      if (typeParam === "provider" || typeParam === "admin") {
+      if (typeParam === 'provider' || typeParam === 'admin') {
         setUserType(typeParam);
       }
 
-      // Générer des statistiques fictives selon le type d'utilisateur
-      if (typeParam === "provider") {
+      if (typeParam === 'provider') {
         setStats({
           bookings: 24,
           completed: 18,
@@ -43,7 +42,7 @@ export default function DashboardPage() {
           revenue: 1250000,
           pendingReviews: 3,
         });
-      } else if (typeParam === "admin") {
+      } else if (typeParam === 'admin') {
         setStats({
           bookings: 156,
           completed: 124,
@@ -108,14 +107,14 @@ export default function DashboardPage() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-2">
           <div>
             <Badge className="tabali-badge tabali-badge-secondary mb-2">
-              {userType === "client" ? "Espace Client" : userType === "provider" ? "Espace Prestataire" : "Administration"}
+              {userType === 'client' ? 'Espace Client' : userType === 'provider' ? 'Espace Prestataire' : 'Administration'}
             </Badge>
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight font-tabali-serif text-tabali-foreground">
-              {userType === "client"
-                ? "Bienvenue sur votre espace"
-                : userType === "provider"
-                ? "Tableau de bord prestataire"
-                : "Tableau de bord administrateur"}
+              {userType === 'client'
+                ? 'Bienvenue sur votre espace'
+                : userType === 'provider'
+                ? 'Tableau de bord prestataire'
+                : 'Tableau de bord administrateur'}
             </h1>
           </div>
           
@@ -132,11 +131,11 @@ export default function DashboardPage() {
         </div>
         
         <p className="text-tabali-muted-foreground text-lg mb-6">
-          {userType === "client"
-            ? "Gérez vos réservations et découvrez des prestataires de qualité"
-            : userType === "provider"
-            ? "Gérez vos services et suivez vos réservations"
-            : "Supervisez l'activité de la plateforme et gérez les utilisateurs"}
+          {userType === 'client'
+            ? 'Gérez vos réservations et découvrez des prestataires de qualité'
+            : userType === 'provider'
+            ? 'Gérez vos services et suivez vos réservations'
+            : 'Supervisez l\'activité de la plateforme et gérez les utilisateurs'}
         </p>
       </motion.div>
 
@@ -194,7 +193,7 @@ export default function DashboardPage() {
           </Card>
         </motion.div>
 
-        {userType === "client" && (
+        {userType === 'client' && (
           <motion.div variants={item}>
             <Card className="border-tabali-border hover:shadow-md transition-all duration-300">
               <CardContent className="p-6">
@@ -212,7 +211,7 @@ export default function DashboardPage() {
           </motion.div>
         )}
 
-        {(userType === "provider" || userType === "admin") && (
+        {(userType === 'provider' || userType === 'admin') && (
           <motion.div variants={item}>
             <Card>
               <CardContent className="p-6">
@@ -261,14 +260,17 @@ export default function DashboardPage() {
         </motion.div>
       </motion.div>
 
+      {/* Ajout du composant DashboardCharts avec stats */}
+      <DashboardCharts userType={userType} stats={stats} />
+
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold font-tabali-serif text-tabali-foreground">
-            {userType === "client"
-              ? "Réservations récentes"
-              : userType === "provider"
-              ? "Dernières demandes"
-              : "Dernières activités"}
+            {userType === 'client'
+              ? 'Réservations récentes'
+              : userType === 'provider'
+              ? 'Dernières demandes'
+              : 'Dernières activités'}
           </h2>
           <Link href="/dashboard/bookings">
             <Button variant="outline" size="sm" className="flex items-center gap-2 hover:bg-tabali-primary/10">
@@ -304,8 +306,8 @@ export default function DashboardPage() {
                         </div>
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-tabali-primary to-tabali-secondary opacity-70 flex items-center justify-center text-white font-bold">
-                          {userType === "client" ? 
-                            MOCK_PROVIDERS[index]?.name?.charAt(0) || "P" : 
+                          {userType === 'client' ? 
+                            MOCK_PROVIDERS[index]?.name?.charAt(0) || 'P' : 
                             `C${index + 1}`
                           }
                         </div>
@@ -315,9 +317,9 @@ export default function DashboardPage() {
                       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                         <div>
                           <h3 className="font-medium text-tabali-foreground">
-                            {userType === "client"
+                            {userType === 'client'
                               ? `Réservation avec ${MOCK_PROVIDERS[index].name}`
-                              : userType === "provider"
+                              : userType === 'provider'
                               ? `Demande de Client ${index + 1}`
                               : `Réservation #${100 + index}`}
                           </h3>
@@ -325,15 +327,15 @@ export default function DashboardPage() {
                             <p className="text-sm text-tabali-muted-foreground">
                               {new Date(
                                 Date.now() - index * 24 * 60 * 60 * 1000
-                              ).toLocaleDateString("fr-FR", {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
+                              ).toLocaleDateString('fr-FR', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
                               })}
                             </p>
                             <span className="text-xs text-tabali-muted-foreground">•</span>
                             <p className="text-sm text-tabali-muted-foreground">
-                              {index === 0 ? "Plomberie" : index === 1 ? "Électricité" : "Menuiserie"}
+                              {index === 0 ? 'Plomberie' : index === 1 ? 'Électricité' : 'Menuiserie'}
                             </p>
                           </div>
                         </div>
@@ -341,17 +343,17 @@ export default function DashboardPage() {
                           <span
                             className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                               index === 0
-                                ? "bg-amber-100 text-amber-800"
+                                ? 'bg-amber-100 text-amber-800'
                                 : index === 1
-                                ? "bg-tabali-primary/10 text-tabali-primary"
-                                : "bg-blue-100 text-blue-800"
+                                ? 'bg-tabali-primary/10 text-tabali-primary'
+                                : 'bg-blue-100 text-blue-800'
                             }`}
                           >
                             {index === 0
-                              ? "En attente"
+                              ? 'En attente'
                               : index === 1
-                              ? "Confirmé"
-                              : "Terminé"}
+                              ? 'Confirmé'
+                              : 'Terminé'}
                           </span>
                         </div>
                       </div>
@@ -364,7 +366,7 @@ export default function DashboardPage() {
         </motion.div>
       </div>
 
-      {userType === "client" && (
+      {userType === 'client' && (
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold font-tabali-serif text-tabali-foreground">Prestataires recommandés</h2>
