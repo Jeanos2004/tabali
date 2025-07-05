@@ -50,7 +50,7 @@ export default function AddServiceForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 text-tabali-text">
+    <form onSubmit={handleSubmit} className="space-y-4 text-tabali-text bg-white p-6 rounded-xl shadow-md">
       <div>
         <Label htmlFor="name" className="text-tabali-primary">Nom du service</Label>
         <Input
@@ -62,7 +62,7 @@ export default function AddServiceForm() {
         />
       </div>
 
-      <div className="bg-gray-800 text-white border border-gray-600">
+      <div className="bg-gray-800 text-yellow border border-gray-600">
         <Label htmlFor="category" className="text-white">Catégorie</Label>
 
        <div className="bg-gray-900 text-white border border-gray-700">
